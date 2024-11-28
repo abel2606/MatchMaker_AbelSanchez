@@ -88,6 +88,16 @@ fieldset{
     background: #f5839b;
 }
 
+.backdrop{
+    background-color: #f4f4f9;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3;
+}
 
 .match{
     padding: 3rem;
@@ -155,4 +165,6 @@ header .match-name{
     outline-width: 2px;
 }
 
-
+.info{
+    width: 100%;
+}
