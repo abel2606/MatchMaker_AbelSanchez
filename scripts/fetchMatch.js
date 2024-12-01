@@ -1,4 +1,4 @@
-window.onload = function(){
+window.onload = function () {
     //cargarInfo();
     const data = recuperarInfo();
     console.log(data);
@@ -6,10 +6,42 @@ window.onload = function(){
 
 }
 
-function recuperarInfo(){
-    return  JSON.parse(localStorage.getItem("matchinfo"));
+function recuperarInfo() {
+    return JSON.parse(localStorage.getItem("matchinfo"));
 }
-function cargarInfo(){
+
+async function cargarInfoAsync() {
+    try {
+        const query = window.location.search;
+        const urlParams = new URLSearchParams(query);
+
+
+        const nac = urlParams.get("nac");
+        const genero = urlParams.get("genero");
+
+        const request = new Request(
+            `https://randomuser.me/api/?nat=${nac}&gender=${gender}`,
+            {
+                method: 'get',
+                headers: new Headers({
+                    "Content-Type": "application/json"
+                })
+            }
+        );
+
+        const response = await fetch(request);
+        const data = await response.json();
+        llenarInfo(data.results[0]);
+
+
+    } catch (error) {
+        console.log(error);
+        alert("Hubo un error encontrando a tu otra mitad: :(")
+    }
+
+}
+
+function cargarInfo() {
     const query = window.location.search;
     const urlParams = new URLSearchParams(query);
 
@@ -27,18 +59,18 @@ function cargarInfo(){
         }
     );
 
-    fetch(request).then(function(response){
+    fetch(request).then(function (response) {
         return response.json();
-    }).then(function(data){
+    }).then(function (data) {
         llenarInfo(data.results[0]);
-    }).catch/function(error){
+    }).catch / function (error) {
         alert("hubo un error encoentrado a tu otra mitad: (");
     }
-    
+
 }
 
 
-function llenarInfo(data){
+function llenarInfo(data) {
     console.log(data);
     const img = document.getElementById("img");
     const name = document.getElementById("name");
